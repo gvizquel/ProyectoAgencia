@@ -48,7 +48,7 @@ def registro(request):
                 user.save()
 
                 current_site = get_current_site(request)
-                subject = 'Activa tú cuenta en el MPPEUCT/OPSU'
+                subject = 'Activa tú cuenta en el AGENCIA/VIAJES'
                 contexto = {
                     'user': user,
                     'domain': current_site.domain,
