@@ -7,10 +7,6 @@ from ckeditor.fields import RichTextField
 
 
 class Viajero(models.Model):
-    SEXO_CHOICES = (
-        ('F', 'FEMENINO'),
-        ('M', 'MASCULINO'),
-    )
     LETRACEDULA_CHOICES = (
         ('V', 'V'),
         ('E', 'E'),

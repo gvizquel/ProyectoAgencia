@@ -48,7 +48,7 @@
                     <div class="box">
                         <div class="box-header">
                             <h3 class="box-title">Viajeros</h3>
-                            <a href="" class="btn btn-success btn pull-right">Agregar</a>
+                            <button onclick="return abrir_modal('{{ url('agencia:agregar-viajero') }}')" data-toggle="tooltip" title="Agregar Viajero" type="button" class="btn btn-success btn-xs pull-right"><span class="fa fa-fw fa-plus-circle"></span></button>
                         </div>
                         <!-- /.box-header -->
                         <div class="box-body">
@@ -66,8 +66,11 @@
                                     <tr>
                                         <td>{{ object.nombre }}</td>
                                         <td>{{ object.apellido }}</td>
-                                        <td>{{ object.letra_cedula_identidad }}-{{ object.cedula }}</td>
+                                        <td>{{ object.letra_cedula_identidad }}-{{ object.cedula_identidad }}</td>
                                         <td class="text-center">
+                                            <button onclick="return abrir_modal('{{ url('agencia:detalle-viajero', args=[ object.pk]) }}')" data-toggle="tooltip" title="Ver este viajero" type="button" class="btn btn-default btn-xs"><span class="fa fa-eye"></span></button>
+                                            <button onclick="return abrir_modal('{{ url('agencia:editar-viajero', args=[ object.pk]) }}')" data-toggle="tooltip" title="Editar este viajero" type="button" class="btn btn-primary btn-xs"><span class="fa fa-eye"></span></button>
+                                            <button onclick="return abrir_modal('{{ url('agencia:eliminar-viajero', args=[ object.pk]) }}')" data-toggle="tooltip" title="Eliminar viajero" type="button" class="btn btn-danger btn-xs"><span class="fa fa-trash"></span></button>
                                         </td>
                                     </tr>
                                     {% endfor %}
@@ -103,6 +106,12 @@
     <script src="{{ static('bower_components/datatables.net-buttons/js/buttons.html5.min.js') }}"></script>
     <script src="{{ static('bower_components/datatables.net-buttons/js/buttons.print.min.js') }}"></script>
     <script src="{{ static('bower_components/datatables.net-buttons/js/buttons.colVis.min.js') }}"></script>
+    <!-- InputMask -->
+    <script src="{{ static('plugins/input-mask/jquery.inputmask.js') }}"></script>
+    <script src="{{ static('plugins/input-mask/jquery.inputmask.date.extensions.js') }}"></script>
+    <script src="{{ static('plugins/input-mask/jquery.inputmask.extensions.js') }}"></script>
+    <!-- iCheck 1.0.1 -->
+    <script src="{{ static('plugins/iCheck/icheck.min.js') }}"></script>
     <!-- page script -->
     <script>
         function abrir_modal(url) {

@@ -1,0 +1,74 @@
+<div class="modal-dialog modal-side modal-top-right" id="empresa">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title">{% if object %}Editar {% else %}Agregar {% endif %} {{ titulo }}</h4>
+            </div>
+            {% if object %}
+                <form class="form-horizontal" method="POST" role="form" action="{{ request.path }}">
+            {% else %}
+                <form class="form-horizontal" method="POST" role="form" action="{{ request.path }}">
+            {% endif %}
+            <input type="hidden" name="csrfmiddlewaretoken" value="{{ csrf_token }}">
+            <div class="box-body">
+                {% for field in form %}
+                    {% if field.name != 'letra_cedula_identidad' and field.name != 'cedula_identidad' %}
+                        <div class="form-group">
+                            <label for="{{ field.id_for_label }}" class="col-sm-3 control-label">{{ field.label }}</label>
+                            <div class="col-sm-9">
+                                {{ field }}
+                            </div>
+                            <span class="help-block">
+                                {% for error in field.errors %}
+                                    <ul>
+                                        <li class="text-red">{{ error }}</li>
+                                    </ul>
+                                {% endfor %}
+                            </span>
+                        </div>
+                    {% elif field.name == 'cedula_identidad' %}
+                        <div class="form-group">
+                            <label for="id_cedula_identidad" class="col-sm-3 control-label">Cédula de Identidad</label>
+                            <div class="col-sm-9">
+                                <div class="input-group">
+                                    <span class="input-group-addon">
+                                        V <input type="radio" value="V" name="letra_cedula_identidad" id="id_letra_cedula_identidad" class="minimal" {% if form.letra_cedula_identidad.value() != 'E' %} checked {% endif %}>
+                                        &nbsp;E <input type="radio" value="E" name="letra_cedula_identidad" id="id_letra_cedula_identidad" class="minimal" {% if form.letra_cedula_identidad.value() == 'E' %} checked {% endif %}>
+                                    </span>
+                                    <input type="number" name="cedula_identidad" value="{{ form.cedula_identidad.value() }}" id="id_cedula_identidad" class="form-control" />
+                                </div>
+                                <span class="help-block">
+                                    {% for error in form.cedula_identidad.errors %}
+                                        <ul>
+                                            <li class="text-red">{{ error }}</li>
+                                        </ul>
+                                    {% endfor %}
+                                </span>
+
+                                <span class="help-block">
+                                    {% for error in form.letra_cedula_identidad.errors %}
+                                        <ul>
+                                            <li class="text-red">{{ error }}</li>
+                                        </ul>
+                                    {% endfor %}
+                                </span>
+                            </div>
+                        </div>
+                    {% endif %}
+                {% endfor %}
+            </div>
+            <div class="box-footer">
+                <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Cerrar</button>
+                <button type="submit" class="btn btn-primary pull-right">{%if object %}Editar{% else %}Agregar{% endif %} </button>
+            </div>
+              <!-- /.box-footer -->
+        </form>
+        </div>
+    </div>
+    <!-- /.modal-content -->
+</div>
+<!-- /.modal-dialog -->
+<script>
+    $('[data-mask]').inputmask()
+</script>

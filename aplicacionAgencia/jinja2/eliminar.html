@@ -1,0 +1,31 @@
+<div class="modal-danger modal-dialog" id="tipo_ieu_eliminar">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                    <h4 class="modal-title">Eliminar {{ titulo }}</h4>
+                </div>
+                <form class="form-horizontal" role="form" action="{{ request.path }}" method="post">
+                    <input type="hidden" name="csrfmiddlewaretoken" value="{{ csrf_token }}">
+                    <div class="modal-body">
+                        {% if not relacionado %}
+                            <p>¿Está seguro de querer eliminar el {{ titulo }} <b>{{ object.nombre }}</b>?</p>
+                        {% else %}
+                            <p>No es posible eliminar el {{ titulo }} <b>{{ object.nombre }}</b>, debido a que hay <u>localidades</u> que dependen de este registro. Elimine este {{ titulo }} de las localidades y regrese acá para eliminar este registro.</p>
+                        {% endif %}
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-outline pull-left" data-dismiss="modal">Cerrar</button>
+                        {% if not relacionado %}
+                            <button type="submit" class="btn btn-outline pull-right">Eliminar</button>
+                        {% endif %}
+                    </div>
+                </form>
+            </div>
+            <!-- /.modal-content -->
+        </div>
+        <!-- /.modal-dialog -->
+    </div>
+    <!-- /.modal -->

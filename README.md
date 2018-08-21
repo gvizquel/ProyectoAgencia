@@ -10,12 +10,18 @@ user@nombre_maquina:/# sudo aptitude install python3 python3-pip python3-virtual
 user@nombre_maquina:$ virtualenv -p python3 envAgencia
 ```
 
-### Activar y actualizar el entorno virtual ###
+## Activar y actualizar el entorno virtual ##
 
 ```console
 user@nombre_maquina:$ cd envAgencia
 user@nombre_maquina:$ source bin/activate
-(envAgencia) user@nombre_maquina:/var/www/envAgencia$ pip install -U virtualenv pip
+(envAgencia) user@nombre_maquina:envAgencia$ pip install -U virtualenv pip
+```
+
+## instalar requisitos ##
+
+```console
+(envAgencia) user@nombre_maquina:envAgencia$ pip install -r requirements.txt
 ```
 
 ## Clonar el repositorio git ##
