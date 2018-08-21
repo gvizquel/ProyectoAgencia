@@ -1,0 +1,422 @@
+{% extends "base.html" %}
+
+{% block title %} Cuenta | Perfil {% endblock title %}
+
+{% block stylesheets %}
+    {{ super() }}
+    <!-- bootstrap datepicker -->
+    <link rel="stylesheet" href="{{ static('bower_components/bootstrap-datepicker/dist/css/bootstrap-datepicker.min.css') }}">
+    <!-- iCheck for checkboxes and radio inputs -->
+    <link rel="stylesheet" href="{{ static('plugins/iCheck/all.css') }}">
+{% endblock stylesheets %}
+
+{% block content %}
+    <!-- Content Wrapper. Contains page content -->
+    <div class="content-wrapper">
+        <!-- Content Header (Page header) -->
+        <section class="content-header">
+            <h1>
+                Cuenta
+                <small>Perfil del usuario</small>
+            </h1>
+        </section>
+        <!-- Main content -->
+        <section class="content">
+            {% if get_messages(request) %}
+                {% for message in get_messages(request) %}
+                    <div class="alert alert-{{ message.tags }} alert-dismissible">
+                        <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                        {% if message.tags == 'error' %}
+                            <h4><i class="icon fa fa-ban"></i> ¡Alerta!</h4>
+                        {% elif message.tags == 'warning' %}
+                            <h4><i class="icon fa fa-warning"></i> ¡Cuidado!</h4>
+                        {% elif message.tags == 'success' %}
+                            <h4><i class="icon fa fa-check"></i> ¡Exito!</h4>
+                        {% elif message.tags == 'info' %}
+                            <h4><i class="icon fa fa-info"></i> ¡Atención!</h4>
+                        {% endif %}
+                        {{ message }}
+                    </div>
+                {% endfor %}
+            {% endif %}
+            {% if form.errors %}
+                <div class="alert alert-danger alert-dismissible">
+                    <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                    <h4><i class="icon fa fa-ban"></i> ¡Alerta!</h4>
+                    Hay errores en el formulario de perfil. Por favor corríjalos y vuelva a intentar actualizar sus datos.
+                </div>
+            {% endif %}
+            <div class="row">
+                <div class="col-md-3">
+                    <!-- Profile Image -->
+                    <div class="box box-primary">
+                        <div class="box-body box-profile">
+                            <a href="{{ request.user.avatar.url }}" target="blank"><img class="profile-user-img img-responsive img-circle" src="{{ request.user.avatar.url }}" alt="{{ request.user }}"></a>
+                            <h3 class="profile-username text-center">{{ request.user }}</h3>
+                            <p class="text-muted text-center">{{ request.user.email }}</p>
+                        </div>
+                        <!-- /.box-body -->
+                        <div class="box-footer">
+                            <a href="{{ url('cuenta:cambiar-clave') }}" class="btn btn-primary btn-block">Cambiar Password</a>
+                        </div>
+                            <!-- /.box-footer -->
+                    </div>
+                    <!-- /.box -->
+
+                    <!-- About Me Box -->
+                    <div class="box box-primary">
+                        <div class="box-header with-border">
+                                <h3 class="box-title">Acerca de mi</h3>
+                        </div>
+                        <!-- /.box-header -->
+                        <div class="box-body">
+                            <strong><i class="fa fa-book margin-r-5"></i> Educación</strong>
+
+                            <p class="text-muted">
+                            B.S. in Computer Science from the University of Tennessee at Knoxville
+                            </p>
+
+                            <hr>
+
+                            <strong><i class="fa fa-map-marker margin-r-5"></i> Dirección</strong>
+
+                            <p class="text-muted">Malibu, California</p>
+
+                            <hr>
+
+                            <strong><i class="fa fa-pencil margin-r-5"></i> Habilidades</strong>
+
+                            <p>
+                            <span class="label label-danger">UI Design</span>
+                            <span class="label label-success">Coding</span>
+                            <span class="label label-info">Javascript</span>
+                            <span class="label label-warning">PHP</span>
+                            <span class="label label-primary">Node.js</span>
+                            </p>
+
+                            <hr>
+
+                            <strong><i class="fa fa-users margin-r-5"></i> Redes Sociales</strong>
+                            <div class="box-body">
+                                <a href="https://www.facebook.com/{{ request.user.facebook }}" target="blank" class="btn btn-block btn-social btn-facebook">
+                                    <i class="fa fa-facebook"></i> {{ request.user.facebook }}
+                                </a>
+                                <a href="https://www.instagram.com/{{ request.user.instagram }}" target="blank"  class="btn btn-block btn-social btn-instagram">
+                                    <i class="fa fa-instagram"></i> {{ request.user.instagram }}
+                                </a>
+                                <a href="http://www.linkedin.com/in/{{ request.user.linkedin }}" target="blank" class="btn btn-block btn-social btn-linkedin">
+                                    <i class="fa fa-linkedin"></i> {{ request.user.linkedin }}
+                                </a>
+                                <a href="https://twitter.com/{{ request.user.twitter }}" target="blank" class="btn btn-block btn-social btn-twitter">
+                                    <i class="fa fa-twitter"></i> {{ request.user.twitter }}
+                                </a>
+                            </div>
+                        </div>
+                        <!-- /.box-body -->
+                        <div class="box-footer">
+                            <button type="submit" class="btn btn-primary pull-right">Actualizar</button>
+                        </div>
+                        <!-- /.box-footer -->
+                        <!-- /.box-body -->
+                    </div>
+                    <!-- /.box -->
+                </div>
+                <!-- /.col -->
+                <div class="col-md-9">
+                    <!-- Horizontal Form -->
+                    <div class="box box-primary">
+                        <div class="box-header with-border">
+                            <h3 class="box-title">Datos del Usuario</h3>
+                        </div>
+                        <!-- /.box-header -->
+                        <!-- form start -->
+                        {% block contenido %}
+                        <form class="form-horizontal" method="post" enctype="multipart/form-data" role="form">
+                            <input type="hidden" name="csrfmiddlewaretoken" value="{{ csrf_token }}">
+                            <div class="box-body">
+                                <div class="form-group">
+                                    <label for="id_avatar" class="col-sm-3 control-label">Imagen de Perfil</label>
+                                    <div class="col-sm-9">
+                                        <div class="input-group input-file" name="Avatar">
+                                            <span class="input-group-btn">
+                                                <button class="btn btn-primary btn-choose" type="button">Examinar</button>
+                                            </span>
+                                            <input type="text" class="form-control" placeholder='Seleccione una imagen...' />
+                                            <span class="input-group-btn">
+                                                <button class="btn btn-warning btn-reset" type="button">Reset</button>
+                                            </span>
+                                        </div>
+                                        <span class="help-block">
+                                            {% for error in form.avatar.errors %}
+                                                <ul>
+                                                    <li class="text-red">{{ error }}</li>
+                                                </ul>
+                                            {% endfor %}
+                                        </span>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="id_first_name" class="col-sm-3 control-label">Nombre</label>
+                                    <div class="col-sm-9">
+                                        <div class="input-group">
+                                            {{ form.first_name }}
+                                            <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
+                                        </div>
+                                        <span class="help-block">
+                                            {% for error in form.first_name.errors %}
+                                                <ul>
+                                                    <li class="text-red">{{ error }}</li>
+                                                </ul>
+                                            {% endfor %}
+                                        </span>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="id_otros_nombres" class="col-sm-3 control-label">Otros Nombres</label>
+                                    <div class="col-sm-9">
+                                        <div class="input-group">
+                                                {{ form.otros_nombres }}
+                                            <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
+                                        </div>
+                                        <span class="help-block">
+                                            {% for error in form.otros_nombres.errors %}
+                                                <ul>
+                                                    <li class="text-red">{{ error }}</li>
+                                                </ul>
+                                            {% endfor %}
+                                        </span>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="id_last_name" class="col-sm-3 control-label">Apellido</label>
+                                    <div class="col-sm-9">
+                                        <div class="input-group">
+                                                {{ form.last_name }}
+                                            <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
+                                        </div>
+                                        <span class="help-block">
+                                            {% for error in form.last_name.errors %}
+                                                <ul>
+                                                    <li class="text-red">{{ error }}</li>
+                                                </ul>
+                                            {% endfor %}
+                                        </span>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="id_otros_apellidos" class="col-sm-3 control-label">Otros Apellidos</label>
+                                    <div class="col-sm-9">
+                                        <div class="input-group">
+                                                {{ form.otros_apellidos }}
+                                            <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
+                                        </div>
+                                        <span class="help-block">
+                                            {% for error in form.otros_apellidos.errors %}
+                                                <ul>
+                                                    <li class="text-red">{{ error }}</li>
+                                                </ul>
+                                            {% endfor %}
+                                        </span>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="id_cedula_identidad" class="col-sm-3 control-label">Cédula de Identidad</label>
+                                    <div class="col-sm-9">
+                                        <div class="input-group">
+                                            <span class="input-group-addon">
+                                                V <input type="radio" value="V" name="letra_cedula_identidad" id="id_letra_cedula_identidad" class="minimal" {% if form.letra_cedula_identidad.value() != 'E' %} checked {% endif %}>
+                                                &nbsp;E <input type="radio" value="E" name="letra_cedula_identidad" id="id_letra_cedula_identidad" class="minimal" {% if form.letra_cedula_identidad.value() == 'E' %} checked {% endif %}>
+                                            </span>
+                                            <input type="number" name="cedula_identidad" value="{{ form.cedula_identidad.value() }}" id="id_cedula_identidad" class="form-control" />
+                                        </div>
+                                        <span class="help-block">
+                                            {% for error in form.cedula_identidad.errors %}
+                                                <ul>
+                                                    <li class="text-red">{{ error }}</li>
+                                                </ul>
+                                            {% endfor %}
+                                        </span>
+
+                                        <span class="help-block">
+                                            {% for error in form.letra_cedula_identidad.errors %}
+                                                <ul>
+                                                    <li class="text-red">{{ error }}</li>
+                                                </ul>
+                                            {% endfor %}
+                                        </span>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="id_email_secundario" class="col-sm-3 control-label">Correo Secundario</label>
+                                    <div class="col-sm-9">
+                                        <div class="input-group">
+                                                {{ form.email_secundario }}
+                                            <span class="input-group-addon"><i class="glyphicon glyphicon-envelope"></i></span>
+                                        </div>
+                                        <span class="help-block">
+                                            {% for error in form.email_secundario.errors %}
+                                                <ul>
+                                                    <li class="text-red">{{ error }}</li>
+                                                </ul>
+                                            {% endfor %}
+                                        </span>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="id_telefono" class="col-sm-3 control-label">Teléfono Local</label>
+                                    <div class="col-sm-9">
+                                        <div class="input-group">
+                                            <input type="text" name="telefono" id="id_telefono" value="{{ form.telefono.value() }}" class="form-control" data-inputmask="'mask': ['+58 (999) 999-99-99']" data-mask>
+                                            <span class="input-group-addon"><i class="glyphicon glyphicon-phone-alt"></i></span>
+                                        </div>
+                                        <span class="help-block">
+                                            {% for error in form.telefono.errors %}
+                                                <ul>
+                                                    <li class="text-red">{{ error }}</li>
+                                                </ul>
+                                            {% endfor %}
+                                        </span>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="id_celular" class="col-sm-3 control-label">Teléfono Celular</label>
+                                    <div class="col-sm-9">
+                                        <div class="input-group">
+                                            <input type="text" name="celular" id="id_celular" value="{{ form.celular.value() }}" class="form-control" data-inputmask="'mask': ['+58 (999) 999-99-99']" data-mask>
+                                            <span class="input-group-addon"><i class="glyphicon glyphicon-phone"></i></span>
+                                        </div>
+                                        <span class="help-block">
+                                            {% for error in form.celular.errors %}
+                                                <ul>
+                                                    <li class="text-red">{{ error }}</li>
+                                                </ul>
+                                            {% endfor %}
+                                        </span>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="id_fecha_nacimiento" class="col-sm-3 control-label">Fecha de Nacimiento</label>
+                                    <div class="col-sm-9">
+                                        <div class="input-group">
+                                            <input type="text" name="fecha_nacimiento" value="{{ form.fecha_nacimiento.value() }}" id="id_fecha_nacimiento" class="form-control" data-inputmask="'alias': 'dd/mm/yyyy'" data-mask>
+                                            <span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
+                                        </div>
+                                        <span class="help-block">
+                                            {% for error in form.fecha_nacimiento.errors %}
+                                                <ul>
+                                                    <li class="text-red">{{ error }}</li>
+                                                </ul>
+                                            {% endfor %}
+                                        </span>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="id_sexo" class="col-sm-3 control-label">Sexo</label>
+                                    <div class="col-sm-9">
+                                        <div class="input-group">
+                                            {{ form.sexo }}
+                                            <span class="input-group-addon"><i class="fa fa-intersex"></i></span>
+                                        </div>
+                                        <span class="help-block">
+                                            {% for error in form.sexo.errors %}
+                                                <ul>
+                                                    <li class="text-red">{{ error }}</li>
+                                                </ul>
+                                            {% endfor %}
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- /.box-body -->
+                            <div class="box-footer">
+                                <button type="submit" class="btn btn-primary pull-right">Actualizar Perfil</button>
+                            </div>
+                            <!-- /.box-footer -->
+                        </form>
+                        {% endblock contenido %}
+                    </div>
+                </div>
+                <!-- /.col -->
+            </div>
+                <!-- /.row -->
+
+              </section>
+        <!-- /.content -->
+        <div id="popup" class="modal fade" role="dialog"></div>
+    </div>
+    <!-- /.content-wrapper -->
+{% endblock content %}
+
+{% block javascripts %}
+    {{ super() }}
+    <!-- bootstrap datepicker -->
+    <script src="{{ static('bower_components/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js') }}"></script>
+    <script src="{{ static('bower_components/bootstrap-datepicker/js//locales/bootstrap-datepicker.es.js') }}"></script>
+    <!-- InputMask -->
+    <script src="{{ static('plugins/input-mask/jquery.inputmask.js') }}"></script>
+    <script src="{{ static('plugins/input-mask/jquery.inputmask.date.extensions.js') }}"></script>
+    <script src="{{ static('plugins/input-mask/jquery.inputmask.extensions.js') }}"></script>
+    <!-- iCheck 1.0.1 -->
+    <script src="{{ static('plugins/iCheck/icheck.min.js') }}"></script>
+
+    <!-- page script -->
+    <script>
+
+        $('[data-mask]').inputmask()
+
+        //Date picker
+        $('#id_fecha_nacimiento').datepicker({
+            autoclose: true,
+            // startDate: "now",
+            format: "dd/mm/yyyy",
+            language: "es"
+        })
+
+
+        function bs_input_file() {
+            $(".input-file").before(
+                function() {
+                    if ( ! $(this).prev().hasClass('input-ghost') ) {
+                        var element = $("<input type='file' name='avatar' id='id_avatar' class='input-ghost' style='visibility:hidden; height:0'>");
+                        element.change(function(){
+                            element.next(element).find('input').val((element.val()).split('\\').pop());
+                        });
+                        $(this).find("button.btn-choose").click(function(){
+                            element.click();
+                        });
+                        $(this).find("button.btn-reset").click(function(){
+                            element.val(null);
+                            $(this).parents(".input-file").find('input').val('');
+                        });
+                        $(this).find('input').css("cursor","pointer");
+                        $(this).find('input').mousedown(function() {
+                            $(this).parents('.input-file').prev().click();
+                            return false;
+                        });
+                        return element;
+                    }
+                }
+            );
+        }
+
+        $(function() {
+            bs_input_file();
+        });
+
+//iCheck for checkbox and radio inputs
+$('input[type="checkbox"].minimal, input[type="radio"].minimal').iCheck({
+  checkboxClass: 'icheckbox_minimal-blue',
+  radioClass   : 'iradio_minimal-blue'
+})
+//Red color scheme for iCheck
+$('input[type="checkbox"].minimal-red, input[type="radio"].minimal-red').iCheck({
+  checkboxClass: 'icheckbox_minimal-red',
+  radioClass   : 'iradio_minimal-red'
+})
+//Flat red color scheme for iCheck
+$('input[type="checkbox"].flat-red, input[type="radio"].flat-red').iCheck({
+  checkboxClass: 'icheckbox_flat-green',
+  radioClass   : 'iradio_flat-green'
+})
+    </script>
+{% endblock javascripts %}
