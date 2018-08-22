@@ -59,4 +59,5 @@ Quit the server with CONTROL-C.
 
 ## TO DO ##
 
-Sería interesante incorporar fechas de los itinerarios en el test.
+* Sería interesante incorporar fechas de los itinerarios en el test.
+* Despliegue en un abiente de producción con Apache y Nginex.
