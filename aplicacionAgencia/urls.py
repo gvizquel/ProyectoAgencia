@@ -1,4 +1,8 @@
-"""Rutas de nuestra aplicación empresa
+"""Rutas de nuestra aplicación de gestión de gencia de viajes:
+Se utilzó una sola plantilla formulario.html, tanto agregar y editar los tres
+modelos de datos. Tambien se uso una unica palntilla eliminar.html para borrar
+los objetos de los modelos de datos. De igual manera la plantilla detalle.html
+se utilizó par visulizar los datos de los viajeros y los viajes
 """
 # Librerias Django
 from django.contrib.auth.decorators import permission_required
@@ -19,7 +23,7 @@ app_name = 'agencia'
 
 urlpatterns = [
 
-##############################################################################
+########################### Rutas para los viajeros ##########################
     path( # Listar
         'viajero/listar',
         ListView.as_view(
@@ -45,7 +49,7 @@ urlpatterns = [
             extra_context={'titulo': 'Viajero'}
         ),
         name='agregar-viajero'),
-    path(  # Agregar
+    path(  # Editar
         'viajero/editar/<int:pk>',
         UpdateView.as_view(
             model=Viajero,
@@ -67,7 +71,7 @@ urlpatterns = [
             extra_context={'titulo': 'Viajero'}
         ),
         name='eliminar-viajero'),
-##############################################################################
+############################ rutas para los viajes ###########################
     path( # Listar
         'viaje/listar',
         ListView.as_view(
@@ -93,7 +97,7 @@ urlpatterns = [
             extra_context={'titulo': 'Viaje'}
         ),
         name='agregar-viaje'),
-    path(  # Agregar
+    path(  # Editar
         'viaje/editar/<int:pk>',
         UpdateView.as_view(
             model=Viaje,
@@ -115,7 +119,7 @@ urlpatterns = [
             extra_context={'titulo': 'Viaje'}
         ),
         name='eliminar-viaje'),
-##############################################################################
+########################## rutas de los itinerarios ##########################
     path( # Listar
         'itinerario/listar',
         ListView.as_view(
@@ -123,14 +127,6 @@ urlpatterns = [
             template_name='itinerario_listar.html'
         ),
         name='listar-itinerario'),
-    path(  # Detalle
-        'itinerario/detalle/<int:pk>',
-        DetailView.as_view(
-            model=Itinerario,
-            template_name='detalle.html',
-            extra_context={'titulo': 'Itinerario'}
-        ),
-        name='detalle-itinerario'),
     path(  # Agregar
         'itinerario/agregar',
         CreateView.as_view(
@@ -141,7 +137,7 @@ urlpatterns = [
             extra_context={'titulo': 'Itinerario'}
         ),
         name='agregar-itinerario'),
-    path(  # Agregar
+    path(  # Editar
         'itinerario/editar/<int:pk>',
         UpdateView.as_view(
             model=Itinerario,

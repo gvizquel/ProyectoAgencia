@@ -1,3 +1,5 @@
+"""Clases de modelos de datos para la agencia de viajes
+"""
 from django.db import models
 
 # Create your models here.
@@ -7,6 +9,8 @@ from ckeditor.fields import RichTextField
 
 
 class Viajero(models.Model):
+    """Modelo para la gestión de las personas que viajan
+    """
     LETRACEDULA_CHOICES = (
         ('V', 'V'),
         ('E', 'E'),
@@ -18,11 +22,11 @@ class Viajero(models.Model):
     cedula_identidad = models.IntegerField("Cédula de Identidad", db_index=True)
     direccion = RichTextField()
     telefono = models.CharField("Teléfono Local", max_length=255)
-    # viajes = models.ManyToManyField(
-    #     'Viaje',
-    #     through='Itinerario',
-    #     related_name='viajes'
-    # )
+    viajes = models.ManyToManyField(
+        'Viaje',
+        through='Itinerario',
+        related_name='viajes'
+    )
 
     def __str__(self):
         return '%s %s' % (self.nombre, self.apellido)
@@ -34,6 +38,8 @@ class Viajero(models.Model):
 
 
 class Viaje(models.Model):
+    """Modelo para la gestión de los viajes
+    """
     origen = models.CharField(max_length=255)
     destino = models.CharField(max_length=255)
     plaza = models.IntegerField()
@@ -49,10 +55,12 @@ class Viaje(models.Model):
 
 
 class Itinerario(models.Model):
+    """Model para la gestión de los itinerarios
+    """
     viajero = models.ForeignKey('Viajero', on_delete=models.PROTECT)
     viaje = models.ForeignKey('viaje', on_delete=models.PROTECT)
-    salida = models.DateField()
-    retorno = models.DateField()
+    # salida = models.DateField()
+    # retorno = models.DateField()
 
     def __str__(self):
         return '%s - %s' % (self.viajero, self.viaje)

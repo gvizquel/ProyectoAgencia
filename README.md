@@ -31,7 +31,7 @@ user@nombre_maquina:$ source bin/activate
 (envAgencia) user@nombre_maquina:envAgencia/proyectoAgencia$ pip install -r requirements.txt
 ```
 
-### Inciar servidor de desarrollo ###
+## Inciar servidor de desarrollo ##
 
 ```console
 (envAgencia) user@nombre_maquina:envAgencia/proyectoAgencia$ ./manage.py runserver
@@ -49,7 +49,14 @@ Quit the server with CONTROL-C.
 
 >Para ver nuestro proyecto en funcionamiento, con el navegador web de su preferencia, abra la url <http://127.0.0.1:8000/admin>
 
+## Adicionales ##
 
-### TO DO ###
+* Gestión de usuarios, grupos y niveles de aceso de la de la aplicación: http://127.0.0.1:8000/admin
+* Incorporación de plantilla AdminLTE basada en bootstrap 3
+* Posibilidad de crear muy rapidamente end points API REST con django-rest o API GraphQL con django-graphene. Valdría la pena incorporarlo a los requisitos de la prueba, al menos los GET.
+* Para la portabilidad de los datos se ha utlizado SQLite el cual va adjunto al proyecto.
 
-Validar fechas de los itinerarios
+
+## TO DO ##
+
+Sería interesante incorporar fechas de los itinerarios en el test.

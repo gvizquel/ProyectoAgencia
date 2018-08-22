@@ -1,3 +1,5 @@
+"""Formularios para la agencia de viajes
+"""
 # Librerias Django
 from django import forms
 from django.utils.safestring import mark_safe
@@ -8,6 +10,8 @@ from .models import *
 
 
 class ViajeroForm(ModelForm):
+    """Formulario para la gestión de los viajeros
+    """
     class Meta:
         model = Viajero
         fields = (
@@ -27,6 +31,8 @@ class ViajeroForm(ModelForm):
 
 
 class ViajeForm(ModelForm):
+    """Formularios para la gestión de los viajes
+    """
     class Meta:
         model = Viaje
         fields = (
@@ -44,17 +50,21 @@ class ViajeForm(ModelForm):
 
 
 class ItinerarioForm(ModelForm):
+    """Formulario para la gestion de los itinerarios de viajes sería
+    conveniente agregar las fechas del itenerario para asi poder tener un
+    mejor mayor control
+    """
     class Meta:
         model = Itinerario
         fields = (
             'viajero',
             'viaje',
-            'salida',
-            'retorno',
+            # 'salida',
+            # 'retorno',
         )
         widgets = {
             'viajero': forms.Select(attrs={'class': 'form-control'}),
             'viaje': forms.Select(attrs={'class': 'form-control'}),
-            'salida': forms.TextInput(attrs={'class': 'form-control', 'data-inputmask': mark_safe("'alias': 'dd/mm/yyyy'"), ' data-mask': True}),
-            'retorno': forms.TextInput(attrs={'class': 'form-control', 'data-inputmask': mark_safe("'alias': 'dd/mm/yyyy'"), ' data-mask': True}),
+            # 'salida': forms.TextInput(attrs={'class': 'form-control', 'data-inputmask': mark_safe("'alias': 'dd/mm/yyyy'"), ' data-mask': True}),
+            # 'retorno': forms.TextInput(attrs={'class': 'form-control', 'data-inputmask': mark_safe("'alias': 'dd/mm/yyyy'"), ' data-mask': True}),
         }
