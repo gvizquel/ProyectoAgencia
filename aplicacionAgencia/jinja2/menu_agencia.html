@@ -1,3 +1,9 @@
     <li class="{% if 'viajero' in request.path %}active{% endif %}">
         <a href="{{ url('agencia:listar-viajero') }}"><i class="fa fa-user"></i> <span>Viajero</span></a>
     </li>
+    <li class="{% if 'viaje' in request.path %}active{% endif %}">
+        <a href="{{ url('agencia:listar-viaje') }}"><i class="fa fa-plane"></i> <span>Viaje</span></a>
+    </li>
+    <li class="{% if 'itinerario' in request.path %}active{% endif %}">
+        <a href="{{ url('agencia:listar-itinerario') }}"><i class="fa fa-calendar"></i> <span>Itinerario</span></a>
+    </li>

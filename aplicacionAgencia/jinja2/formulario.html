@@ -71,4 +71,12 @@
 <!-- /.modal-dialog -->
 <script>
     $('[data-mask]').inputmask()
+
+    //Date picker
+    $('#id_salida, #id_retorno').datepicker({
+        autoclose: true,
+        // startDate: "now",
+        format: "dd/mm/yyyy",
+        language: "es"
+    })
 </script>

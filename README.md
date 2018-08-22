@@ -47,3 +47,8 @@ Quit the server with CONTROL-C.
 ```
 
 >Para ver nuestro proyecto en funcionamiento, con el navegador web de su preferencia, abra la url <http://127.0.0.1:8000/admin>
+
+
+### TO DO ###
+
+Validar fechas de los itinerarios

@@ -25,7 +25,7 @@ class Viajero(models.Model):
     # )
 
     def __str__(self):
-        return '%s %s' % (self.first_name, self.last_name)
+        return '%s %s' % (self.nombre, self.apellido)
 
     class Meta:
         verbose_name = ('Viajero')
@@ -40,7 +40,7 @@ class Viaje(models.Model):
     precio = models.FloatField()
 
     def __str__(self):
-        return '%s - %s' % (self.origen, self.destino)
+        return '%s: %s - %s' % (self.id, self.origen, self.destino)
 
     class Meta:
         verbose_name = ('Viaje')
@@ -50,9 +50,12 @@ class Viaje(models.Model):
 
 class Itinerario(models.Model):
     viajero = models.ForeignKey('Viajero', on_delete=models.PROTECT)
-    persona = models.ForeignKey('viaje', on_delete=models.PROTECT)
+    viaje = models.ForeignKey('viaje', on_delete=models.PROTECT)
     salida = models.DateField()
     retorno = models.DateField()
+
+    def __str__(self):
+        return '%s - %s' % (self.viajero, self.viaje)
 
     class Meta:
         db_table = 'itinerario'

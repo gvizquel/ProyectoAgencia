@@ -4,12 +4,10 @@ from django.utils.safestring import mark_safe
 from django.forms import ModelForm
 
 # Librerias en carpetas locales
-from .models import Viajero
+from .models import *
 
 
 class ViajeroForm(ModelForm):
-    """Clase para actualizar el perfil del usuario en el sistema
-    """
     class Meta:
         model = Viajero
         fields = (
@@ -25,4 +23,38 @@ class ViajeroForm(ModelForm):
             'letra_cedula_identidad': forms.Select(attrs={'class': 'form-control'}),
             'cedula_identidad': forms.NumberInput(attrs={'class': 'form-control'}),
             'telefono': forms.TextInput(attrs={'class': 'form-control', 'data-inputmask': mark_safe("'mask': ['+58 (999) 999-99-99']"), ' data-mask': True}),
+        }
+
+
+class ViajeForm(ModelForm):
+    class Meta:
+        model = Viaje
+        fields = (
+            'origen',
+            'destino',
+            'plaza',
+            'precio',
+        )
+        widgets = {
+            'origen': forms.TextInput(attrs={'class': 'form-control'}),
+            'destino': forms.TextInput(attrs={'class': 'form-control'}),
+            'plaza': forms.NumberInput(attrs={'class': 'form-control'}),
+            'precio': forms.NumberInput(attrs={'class': 'form-control'}),
+        }
+
+
+class ItinerarioForm(ModelForm):
+    class Meta:
+        model = Itinerario
+        fields = (
+            'viajero',
+            'viaje',
+            'salida',
+            'retorno',
+        )
+        widgets = {
+            'viajero': forms.Select(attrs={'class': 'form-control'}),
+            'viaje': forms.Select(attrs={'class': 'form-control'}),
+            'salida': forms.TextInput(attrs={'class': 'form-control', 'data-inputmask': mark_safe("'alias': 'dd/mm/yyyy'"), ' data-mask': True}),
+            'retorno': forms.TextInput(attrs={'class': 'form-control', 'data-inputmask': mark_safe("'alias': 'dd/mm/yyyy'"), ' data-mask': True}),
         }

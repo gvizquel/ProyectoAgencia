@@ -18,6 +18,17 @@
                         <dd>{{ object.letra_cedula_identidad }}-{{ object.cedula_identidad }}</dd>
                         <dt>Telefono:</dt>
                         <dd>{{ object.telefono }}</dd>
+                    {% elif titulo == 'Viaje' %}
+                        <dt>Cod. Viaje:</dt>
+                        <dd>{{ object.id }}</dd>
+                        <dt>Origen:</dt>
+                        <dd>{{ object.origen }}</dd>
+                        <dt>Destino:</dt>
+                        <dd>{{ object.destino }}</dd>
+                        <dt>Plaza:</dt>
+                        <dd>{{ object.plaza }}</dd>
+                        <dt>Precio:</dt>
+                        <dd>{{ object.precio }}</dd>
                     {% endif %}
                 </dl>
             </div>
