@@ -18,22 +18,23 @@ user@nombre_maquina:$ source bin/activate
 (envAgencia) user@nombre_maquina:envAgencia$ pip install -U virtualenv pip
 ```
 
-## instalar requisitos ##
-
-```console
-(envAgencia) user@nombre_maquina:envAgencia$ pip install -r requirements.txt
-```
-
 ## Clonar el repositorio git ##
 
 ```console
-(envAgencia) user@nombre_maquina:$ git clone https://github.com/gvizquel/ProyectoAgencia.git
+(envAgencia) user@nombre_maquina:envAgencia$ git clone https://github.com/gvizquel/ProyectoAgencia.git
+(envAgencia) user@nombre_maquina:envAgencia$ cd proyectoAgencia
+```
+
+## instalar requisitos ##
+
+```console
+(envAgencia) user@nombre_maquina:envAgencia/proyectoAgencia$ pip install -r requirements.txt
 ```
 
 ### Inciar servidor de desarrollo ###
 
 ```console
-(envAgencia) user@nombre_maquina:$ ./manage.py runserver
+(envAgencia) user@nombre_maquina:envAgencia/proyectoAgencia$ ./manage.py runserver
 ```
 
 Si todo lo has hecho al pie de la letra y yo no cometí algún error de omisión deberían ver algo como esto:
